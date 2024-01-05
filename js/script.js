@@ -35,31 +35,35 @@ function displayAnimalData(animalData) {
     const voteButton = document.createElement("button")
     voteButton.className = "vote"
     voteButton.textContent = "Vote"
-    voteButton.onclick = () =>{
-        animalData.votes++
-        newvotes = updateVotes(animalData.id, animalData.votes)
-        textContent = `Votes: ${animalData.votes}`
-    }
+    voteButton.addEventListener("click", () => {
+        animalData.votes++;
+        vote.textContent = `Votes: ${animalData.votes}`;
+        updateVotes(animalData.id, animalData.votes);
+    });
     animalPost.appendChild(name)
     animalPost.appendChild(image)
     animalPost.appendChild(vote)
     animalPost.appendChild(voteButton)
     postAnimals.appendChild(animalPost)
 }
-function updateVotes(newVotes) {
-    const updateURL = "http://localhost:3000/characters"
+function updateVotes(id, newVotes) {
+    let votes = {
+        "votes": newVotes
+    }
+    const updateURL = `${POST_URL}/${id}`
     fetch(updateURL, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ votes: newVotes }),
+        body: JSON.stringify(votes),
     })
-        .then((response) => response.json())
-        .then((updatedData) => {
-            console.log("Votes updated successfully:", updatedData)
-        })
-        .catch((error) => console.error("Error updating votes:", error))
+    .then(() => {
+        alert("Successfully posted")
+        getPosts();
+    })
+    .catch((error) => {
+        alert(error)
+        console.log(error)
+    })
 }
-
-
