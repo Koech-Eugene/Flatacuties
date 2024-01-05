@@ -6,3 +6,20 @@
     justify-content: center;
   
 }
+#animalnames{
+    display: flex;
+}
+.list{
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    justify-content: space-around;
+}
+.image {
+    width: 200px;
+    height: 200px;
+}
+.vote{
+    background-color: green;
+    color: white;
+}
