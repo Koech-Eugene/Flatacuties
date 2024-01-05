@@ -1,5 +1,5 @@
 //Getting animal posts
-document.addEventListener('DOMContentLoaded',getAnimal)
+document.addEventListener('DOMContentLoaded',getAnimal, displayAnimalData)
 const postName = document.getElementById("animalnames")
 const postAnimals = document.getElementById("animals")
 const API_URL = "http://localhost:3000/characters"
@@ -25,8 +25,8 @@ function displayAnimalData(animalData) {
     //create elements image and votes
     const animalPost = document.createElement('div')
     postAnimals.innerHTML = ""
-    const name = document.createElement("h4")
-    name.textContent = animalData.name
+    const animal = document.createElement("h4")
+    animal.textContent = animalData.name
     const image = document.createElement("img")
     image.src = animalData.image
     image.className = "image"
@@ -36,31 +36,34 @@ function displayAnimalData(animalData) {
     voteButton.className = "vote"
     voteButton.textContent = "Vote"
     voteButton.addEventListener("click", () => {
+        
         animalData.votes++;
-        vote.textContent = `Votes: ${animalData.votes}`;
-        updateVotes(animalData.id, animalData.votes);
+        vote.textContent = `Votes: ${animalData.votes}`
+        updateVotes(animalData.id, animalData.name, animalData.image, animalData.votes)
     });
-    animalPost.appendChild(name)
+    animalPost.appendChild(animal)
     animalPost.appendChild(image)
     animalPost.appendChild(vote)
     animalPost.appendChild(voteButton)
     postAnimals.appendChild(animalPost)
 }
-function updateVotes(id, newVotes) {
-    let votes = {
-        "votes": newVotes
+function updateVotes(id, animal, image, votes) {
+    let addvotes = {
+        "id": id,
+        "name": animal,
+        "image": image,
+        "votes": votes
     }
-    const updateURL = `${POST_URL}/${id}`
+    const updateURL = `http://localhost:3000/characters/${id}`
     fetch(updateURL, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(votes),
+        body: JSON.stringify(addvotes),
     })
     .then(() => {
-        alert("Successfully posted")
-        getPosts();
+        getAnimal();
     })
     .catch((error) => {
         alert(error)
