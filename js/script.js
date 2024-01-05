@@ -1,5 +1,5 @@
 //Getting animal posts
-document.addEventListener('DOMContentLoaded',getAnimal, displayAnimalData)
+document.addEventListener('DOMContentLoaded',getAnimal)
 const postName = document.getElementById("animalnames")
 const postAnimals = document.getElementById("animals")
 const API_URL = "http://localhost:3000/characters"
@@ -36,7 +36,6 @@ function displayAnimalData(animalData) {
     voteButton.className = "vote"
     voteButton.textContent = "Vote"
     voteButton.addEventListener("click", () => {
-        
         animalData.votes++;
         vote.textContent = `Votes: ${animalData.votes}`
         updateVotes(animalData.id, animalData.name, animalData.image, animalData.votes)
@@ -63,7 +62,7 @@ function updateVotes(id, animal, image, votes) {
         body: JSON.stringify(addvotes),
     })
     .then(() => {
-        getAnimal();
+        getAnimal()
     })
     .catch((error) => {
         alert(error)
