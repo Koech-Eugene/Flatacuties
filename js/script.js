@@ -61,9 +61,7 @@ function updateVotes(id, animal, image, votes) {
         },
         body: JSON.stringify(addvotes),
     })
-    .then(() => {
-        getAnimal()
-    })
+    .then(displayAnimalData(animalData))
     .catch((error) => {
         alert(error)
         console.log(error)
